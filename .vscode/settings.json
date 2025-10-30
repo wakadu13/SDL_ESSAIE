@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "waka.h": "c",
+        "sdl.h": "c",
+        "sdl_ttf.h": "c",
+        "waka_keyboard.h": "c",
+        "stdlib.h": "c",
+        "waka_animation.h": "c",
+        "waka_font.h": "c"
+    }
+}

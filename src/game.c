@@ -22,6 +22,7 @@ void game_init(void)
    indianaPlayer.y=10; 
    indianaPlayer.w=25; 
    indianaPlayer.h=24;
+   animation_setup();
    animation_init();
 }
 void game_update(float dt)

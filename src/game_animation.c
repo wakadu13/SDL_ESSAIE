@@ -7,49 +7,54 @@
 #include "waka/waka_font.h"
 #include "game_animation.h"
 
-animation anim_state[4] = {
-    {0,7,0.1f, true},
-    {12, 12, 0.0f,false},
-    {8,11,0.2f, false},
-    {12, 16, 0.1f, false}
-};
+animation anim_state[4];
 
-indiana_animation currentAnimation;
 
-float current_frame = 0.0f;
+animStatus IndiaP;
+
+void animation_setup(void)
+{
+    anim_state[WALK]= (animation){0,7,0.1f, true}; //(animation) sert a caster le resultat en type animation
+    anim_state[IDLE] = (animation){12, 12, 0.0f,false};
+    anim_state[FIRE] = (animation){8,11,0.2f, false};
+    anim_state[FALL] = (animation){12, 16, 0.1f, false};
+    IndiaP.current_frame =  0.0f;
+
+}
 
 void animation_init(void)
 {
-    currentAnimation = IDLE;
-    current_frame = anim_state[currentAnimation].first;
+    IndiaP.currentAnimation = IDLE;
+    IndiaP.current_frame = anim_state[IndiaP.currentAnimation].first;
 }
+
 void animation_play(indiana_animation anim)
 {
-    if (anim == currentAnimation)
+    if (anim == IndiaP.currentAnimation)
     {
         return;
     }
-    currentAnimation = anim;
-    current_frame = anim_state[currentAnimation].first;
+    IndiaP.currentAnimation = anim;
+    IndiaP.current_frame = anim_state[IndiaP.currentAnimation].first;
     }
 void animation_update(void)
 {
-    current_frame += anim_state[currentAnimation].speed;
-    if(current_frame >= anim_state[currentAnimation].last + 1)
+    IndiaP.current_frame += anim_state[IndiaP.currentAnimation].speed;
+    if(IndiaP.current_frame >= anim_state[IndiaP.currentAnimation].last + 1)
     {
-        if (anim_state[currentAnimation].loop)
+        if (anim_state[IndiaP.currentAnimation].loop)
         {
-            current_frame = anim_state[currentAnimation].first;
+            IndiaP.current_frame = anim_state[IndiaP.currentAnimation].first;
         }
         else
         {
-        current_frame = anim_state[currentAnimation].last;
+        IndiaP.current_frame = anim_state[IndiaP.currentAnimation].last;
         }
     }
 }
 int animation_current_frame(void)
 {
-    return (int)floor(current_frame);
+    return (int)floor(IndiaP.current_frame);
 }
 void drawQuad(waka_texture *tex, int quadW, int quadH, int numFrame, int x, int y)
 {

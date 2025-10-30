@@ -146,14 +146,14 @@ void waka_graphics_draw(waka_texture image, int iX, int iY)
     rectDest.h = image.height;
 
     SDL_SetTextureAlphaMod(image.sdl_texture, _waka_alpha); //Pour modifier la transparence de l'image
-    int iResult = SDL_RenderCopy(waka_sdl_renderer, image.sdl_texture, NULL, &rectDest);
+    int iResult = SDL_RenderCopyEx(waka_sdl_renderer, image.sdl_texture, NULL, &rectDest, 0, NULL, SDL_FLIP_NONE);
     if (iResult != 0)
     {
         printf("Unable to draw texture  Error : %s", IMG_GetError());
         return;
     }
 }
-void waka_graphics_drawQuad(waka_texture image, waka_rectangle pRectSource, int iX, int iY)
+void waka_graphics_drawQuad(waka_texture image, waka_rectangle pRectSource, int iX, int iY, bool FlipH, bool FlipV)
 {
     SDL_Rect rectSource;
     rectSource.x = pRectSource.x;
@@ -166,9 +166,11 @@ void waka_graphics_drawQuad(waka_texture image, waka_rectangle pRectSource, int 
     rectDest.y = iY;
     rectDest.w = rectSource.w;
     rectDest.h = rectSource.h;
-
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+    if(FlipH) flip = SDL_FLIP_HORIZONTAL;
+    if(FlipV) flip = SDL_FLIP_VERTICAL;
     SDL_SetTextureAlphaMod(image.sdl_texture, _waka_alpha); //Pour modifier la transparence de l'image
-    int iResult = SDL_RenderCopy(waka_sdl_renderer, image.sdl_texture,&rectSource, &rectDest);
+    int iResult = SDL_RenderCopyEx(waka_sdl_renderer, image.sdl_texture,&rectSource, &rectDest, 0, NULL, flip);
     if (iResult != 0)
     {
         printf("Unable to draw texture  Error : %s", IMG_GetError());

@@ -10,7 +10,7 @@
 animation anim_state[4];
 
 
-animStatus IndiaP;
+
 
 void animation_setup(void)
 {
@@ -18,54 +18,47 @@ void animation_setup(void)
     anim_state[IDLE] = (animation){12, 12, 0.0f,false};
     anim_state[FIRE] = (animation){8,11,0.2f, false};
     anim_state[FALL] = (animation){12, 16, 0.1f, false};
-    IndiaP.current_frame =  0.0f;
 
 }
 
-void animation_init(void)
+void animation_play(animStatus *status,indiana_animation anim)
 {
-    IndiaP.currentAnimation = IDLE;
-    IndiaP.current_frame = anim_state[IndiaP.currentAnimation].first;
-}
-
-void animation_play(indiana_animation anim)
-{
-    if (anim == IndiaP.currentAnimation)
+    if (anim == status->currentAnimation)
     {
         return;
     }
-    IndiaP.currentAnimation = anim;
-    IndiaP.current_frame = anim_state[IndiaP.currentAnimation].first;
+    status->currentAnimation = anim;
+    status->current_frame = anim_state[anim].first;
     }
-void animation_update(void)
+void animation_update(animStatus *status)
 {
-    IndiaP.current_frame += anim_state[IndiaP.currentAnimation].speed;
-    if(IndiaP.current_frame >= anim_state[IndiaP.currentAnimation].last + 1)
+    status->current_frame += anim_state[status->currentAnimation].speed;
+    if(status->current_frame >= anim_state[status->currentAnimation].last + 1)
     {
-        if (anim_state[IndiaP.currentAnimation].loop)
+        if (anim_state[status->currentAnimation].loop)
         {
-            IndiaP.current_frame = anim_state[IndiaP.currentAnimation].first;
+            status->current_frame = anim_state[status->currentAnimation].first;
         }
         else
         {
-        IndiaP.current_frame = anim_state[IndiaP.currentAnimation].last;
+        status->current_frame = anim_state[status->currentAnimation].last;
         }
     }
 }
-int animation_current_frame(void)
+int animation_current_frame(animStatus *status)
 {
-    return (int)floor(IndiaP.current_frame);
+    return (int)floor(status->current_frame);
 }
-void drawQuad(waka_texture *tex, int quadW, int quadH, int numFrame, int x, int y)
+void drawQuad(waka_texture *tex, int quadW, int quadH, int numFrame, int x, int y, bool FlipH, bool FlipV)
 {
     waka_rectangle rect;
     rect.x = quadW*numFrame;
     rect.y = 0;
     rect.w = quadW;
     rect.h = quadH;
-    waka_graphics_drawQuad(*tex, rect, x, y);
+    waka_graphics_drawQuad(*tex, rect, x, y, FlipH, FlipV);
 }
-void animation_draw(waka_texture *tex, int quadW, int quadH, int x, int y )
+void animation_draw(waka_texture *tex, int quadW, int quadH, int x, int y, animStatus *status, bool FlipH, bool FlipV )
 {
-    drawQuad(tex, quadW, quadH, animation_current_frame(), x, y);
+    drawQuad(tex, quadW, quadH, animation_current_frame(status), x, y, FlipH, FlipV );
 }

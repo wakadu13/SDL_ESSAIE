@@ -22,13 +22,14 @@ typedef struct animStatus
     indiana_animation currentAnimation;
     float current_frame;
 }animStatus;
-void animation_init(void);
-void animation_play(indiana_animation anim);
-void animation_update(void);
-int animation_current_frame(void);
-void animation_draw(waka_texture *tex, int quadW, int quadH, int x, int y );
 
-void drawQuad(waka_texture *tex, int quadW, int quadH, int numFrame, int x, int y);
+
+void animation_play(animStatus *status,indiana_animation anim);
+void animation_update(animStatus *status);
+int animation_current_frame(animStatus *status);
+void animation_draw(waka_texture *tex, int quadW, int quadH, int x, int y,animStatus *status , bool FlipH, bool FlipV);
+
+void drawQuad(waka_texture *tex, int quadW, int quadH, int numFrame, int x, int y, bool FlipH, bool FlipV);
 void animation_setup(void);
 
 

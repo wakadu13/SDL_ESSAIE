@@ -13,6 +13,7 @@ waka_font font;
 waka_texture texTitle;
 waka_texture texIndiana;
 waka_rectangle indianaPlayer;
+animStatus IndiaP;
 void game_init(void)
 {
    font = waka_font_newfont("gfx/PixelMaster.ttf", 25);
@@ -23,43 +24,43 @@ void game_init(void)
    indianaPlayer.w=25; 
    indianaPlayer.h=24;
    animation_setup();
-   animation_init();
+   animation_play(&IndiaP, IDLE);
 }
 void game_update(float dt)
 {
     bool isMove=false;
-    animation_update();
+    animation_update(&IndiaP);
     if (waka_keyboard_isdown("f"))
     {
-        animation_play(FIRE);
+        animation_play(&IndiaP,FIRE);
     }
     if (waka_keyboard_isdown("up"))
     {
-        animation_play(WALK);
+        animation_play(&IndiaP,WALK);
         indianaPlayer.y -= 1;
         isMove = true;
     }
     if (waka_keyboard_isdown("down"))
     {
-        animation_play(WALK);
+        animation_play(&IndiaP,WALK);
         indianaPlayer.y += 1;
         isMove = true;
     }
     if (waka_keyboard_isdown("right"))
     {
-        animation_play(WALK);
+        animation_play(&IndiaP,WALK);
         indianaPlayer.x += 1;
         isMove = true;
     }
     if (waka_keyboard_isdown("left"))
     {
-        animation_play(WALK);
+        animation_play(&IndiaP,WALK);
         indianaPlayer.x -= 1;
         isMove = true;
     }
     if(!(isMove || waka_keyboard_isdown("f")))
     {
-        animation_play(IDLE);
+        animation_play(&IndiaP,IDLE);
     }
 
     
@@ -68,7 +69,7 @@ void game_update(float dt)
 void game_draw(void)
 {
     waka_graphics_draw(texTitle, 1, 1);
-    animation_draw(&texIndiana, indianaPlayer.w, indianaPlayer.h, indianaPlayer.x, indianaPlayer.y);
+    animation_draw(&texIndiana, indianaPlayer.w, indianaPlayer.h, indianaPlayer.x, indianaPlayer.y, &IndiaP, true, true);
    
 }
 void game_close(void)

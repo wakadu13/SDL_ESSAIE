@@ -34,7 +34,7 @@ typedef struct
 waka_texture waka_graphics_newimage(const char *path);//Charge une image et retourne une waka_texture
 void waka_graphics_freeimage(waka_texture image);//Libere une image
 void waka_graphics_draw(waka_texture image, int iX, int iY);//Dessine une image aux coordonnees iX, iY
-void waka_graphics_drawQuad(waka_texture image, waka_rectangle rectSource, int iX, int iY);
+void waka_graphics_drawQuad(waka_texture image, waka_rectangle pRectSource, int iX, int iYC, bool FlipH, bool FlipV);
 
 //Primitives
 void waka_graphics_setcolor(int iRed, int iGreen, int iBlue, int iAlpha);//Definit la couleur de dessin

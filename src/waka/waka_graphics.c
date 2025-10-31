@@ -11,7 +11,8 @@ int _waka_alpha = 255;
 float waka_dt = 0;
 Uint32 _waka_framestart = 0;
  
-
+int waka_GameWidth = 0;
+int waka_GameHeight = 0;
 
 int waka_graphics_init(const char *szTitle, int iWindowWidth, int iWindowHeight, int iGameWidth, int iGameHeight, bool bFullscreen)
 {
@@ -62,6 +63,9 @@ int waka_graphics_init(const char *szTitle, int iWindowWidth, int iWindowHeight,
     SDL_RenderSetLogicalSize(waka_sdl_renderer, iGameWidth, iGameHeight);//Pour gerer le redimensionnement
     SDL_SetRenderDrawBlendMode(waka_sdl_renderer, SDL_BLENDMODE_BLEND);//Pour gerer la transparence
     SDL_RenderSetIntegerScale(waka_sdl_renderer, SDL_TRUE); //Ne lisse pas donc utile pour du pixel art
+    waka_GameWidth = iGameWidth;
+    waka_GameHeight = iGameHeight;
+    
     return 0;
 }
 

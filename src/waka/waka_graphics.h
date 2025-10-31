@@ -7,6 +7,9 @@
 #include "SDL2/SDL_ttf.h"
 extern float waka_dt;//Delta time entre chaque frame
 extern SDL_Renderer *waka_sdl_renderer;//Rendu SDL global
+
+extern int waka_GameWidth;
+extern int waka_GameHeight;
 //Initialisation et fermeture de la SDL
 int waka_graphics_init(const char *szTitle, int iWindowWidth, int iWindowHeight, int iGameWidth, int iGameHeight, bool bFullscreen);
 

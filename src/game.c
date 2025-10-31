@@ -26,6 +26,10 @@ void game_init(void)
    animation_setup();
    animation_play(&IndiaP, IDLE);
 }
+void game_reset(void)
+{
+    animation_play(&IndiaP, IDLE);
+}
 void game_update(float dt)
 {
     bool isMove=false;

@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "waka_graphics.h"
 
+
 #define SDL_ASSERT_LEVEL 2
 
 SDL_Window *waka_sdl_window;
@@ -58,6 +59,10 @@ int waka_graphics_init(const char *szTitle, int iWindowWidth, int iWindowHeight,
 	{
 		printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n",TTF_GetError());
 	}
+    if (!waka_audio_init(44100, 2, 1024)) {
+        printf("SDL_MIX could not initialize! SDL_ttf Error: %s\n", Mix_GetError());
+        /* on peut continuer sans son si tu veux, mais on log l’erreur */
+    }
 
     SDL_SetWindowMinimumSize(waka_sdl_window, iGameWidth, iGameHeight);//Pour eviter d'avoir une fenetre trop petite
     SDL_RenderSetLogicalSize(waka_sdl_renderer, iGameWidth, iGameHeight);//Pour gerer le redimensionnement
@@ -75,6 +80,7 @@ void waka_graphics_close(void)
     // Destruction des elements SDL
     SDL_DestroyRenderer(waka_sdl_renderer);
     SDL_DestroyWindow(waka_sdl_window);
+    waka_audio_close();
 	IMG_Quit();
 	TTF_Quit();
 	SDL_Quit();

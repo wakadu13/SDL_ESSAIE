@@ -5,6 +5,7 @@
 #include "waka/waka_graphics.h"
 #include "waka/waka_font.h"
 #include "waka/waka_keyboard.h"
+#include "waka/waka_sound.h"
 #include "game.h"
 #include "game_animation.h"
 
@@ -14,6 +15,7 @@ waka_texture texTitle;
 waka_texture texIndiana;
 waka_rectangle indianaPlayer;
 animStatus IndiaP;
+waka_sound sonPong;
 void game_init(void)
 {
    font = waka_font_newfont("gfx/PixelMaster.ttf", 25);
@@ -25,6 +27,7 @@ void game_init(void)
    indianaPlayer.h=24;
    animation_setup();
    animation_play(&IndiaP, IDLE);
+    sonPong = waka_audio_loadsound("gfx/perd.wav");
 }
 void game_reset(void)
 {
@@ -37,6 +40,7 @@ void game_update(float dt)
     if (waka_keyboard_isdown("f"))
     {
         animation_play(&IndiaP,FIRE);
+        waka_audio_playsound(sonPong, 1, 1, 240);
     }
     if (waka_keyboard_isdown("up"))
     {
@@ -78,6 +82,7 @@ void game_draw(void)
 }
 void game_close(void)
 {
+    waka_audio_freesound(sonPong);
     waka_graphics_freeimage(texIndiana);
     waka_graphics_freeimage(texTitle);
     waka_font_freefont(font);

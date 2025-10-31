@@ -5,6 +5,8 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL_audio.h"
+#include "waka_sound.h"
 extern float waka_dt;//Delta time entre chaque frame
 extern SDL_Renderer *waka_sdl_renderer;//Rendu SDL global
 
